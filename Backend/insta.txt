@@ -1,0 +1,14 @@
+==>Authentication
+    => register 
+    => Login 
+    => Logout
+
+==> Post
+    => create
+    => can see the feed
+    => like posts (collection types)
+    => save posts
+
+==> usres
+    => following 
+    =: followers
