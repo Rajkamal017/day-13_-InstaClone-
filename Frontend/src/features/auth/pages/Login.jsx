@@ -1,53 +1,56 @@
-import React, {useState} from 'react'
-import "../style/form.scss"
-import {Link} from "react-router"
-import axios from "axios"
-import { useAuth } from '../hooks/useAuth'
+import React, { useState } from "react";
+import "../style/form.scss";
+import { Link } from "react-router";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router";
 
-const login = () => {
+const Login = () => {
+
+    const { user, loading, handleLogin } = useAuth()
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
-    const { handleLogin, loading } = useAuth()
+    const navigate = useNavigate()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await handleLogin(username, password)
+        
+        navigate("/")
+    }
 
     if(loading){
-        return (
+        return (<main>
             <h1>Loading...</h1>
-        )
-    }
-
-    function handleSubmit(e){
-        e.preventDefault()
-
-        handleLogin(username, password)
-        .then( res=>{
-            console.log(res)
-        })
+        </main>)
     }
     
-  return (
-    <main>
-      <div className='form-container'>
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-            <input 
-                onInput={(e)=> { setUsername(e.target.value) }}
-                type="text" 
-                name="username" 
-                placeholder='Enter username' />
-            <input 
-                onInput={(e)=> { setPassword(e.target.value) }}
-                type="password" 
-                name='password' 
-                placeholder= "Enter password" />
-            <button type="submit"> Login </button>
-        </form>
-
-        <p>Don't have an account? <Link className='toggleAuthForm' to="/register">Register</Link></p>
-      </div>
+    return (
+        <main>
+            <div className="form-container">
+                <h1>Login</h1>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        onInput={(e) => {setUsername(e.target.value)}}
+                        type="text"
+                        name="username"
+                        id="username"
+                        placeholder="Enter username"
+                    />
+                    <input
+                        onInput={(e) => {setPassword(e.target.value)}}
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Enter password"
+                    />
+                    <button className="button primary-button">Login</button>
+                </form>
+                <p> Don't have an account? <Link to={"/register"}> Create One.</Link> </p>
+            </div>
     </main>
-  )
-}
+  );
+};
 
-export default login
+export default Login;
