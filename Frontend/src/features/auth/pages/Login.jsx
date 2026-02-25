@@ -1,8 +1,8 @@
-import React, { useState } from "react";
 import "../style/form.scss";
 import { Link } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
 const Login = () => {
 
@@ -16,7 +16,6 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await handleLogin(username, password)
-        
         navigate("/")
     }
 
